@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import './SearchBar.css';
 
+
 export default class SearchBar extends Component {
 
   constructor(props){
+    let initState = '';
+    if(sessionStorage.getItem("searchTerm")){
+      console.log('this worked ' + sessionStorage.getItem("searchTerm") );
+      initState = sessionStorage.getItem("searchTerm");
+    }
+
     super(props);
     
-      this.state = {term: ''};
+      this.state = {term: initState};
       
       
     this.search = this.search.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
   }
 
   search(){
@@ -19,18 +27,38 @@ export default class SearchBar extends Component {
     this.props.onSearch(this.state.term);
   }
 
+  clearSearch(){
+    sessionStorage.removeItem("searchTerm");
+
+    this.setState({term: ''}, function () {
+      console.log('there is nothing here right? ' + this.state.term);
+    });
+
+  }
+
   handleTermChange(e){
     this.setState({ term: e.target.value });
   }
 
   render() {
-    
-
-    return (
+    let spotifyAuthCheck = sessionStorage.getItem("spotifyAuth");
+    if(spotifyAuthCheck){
+      return (
         <div className="SearchBar">
-        <input placeholder="Enter A Song, Album, or Artist" onChange={this.handleTermChange} />
+        <div className="inputAndClear">
+        <input placeholder="Enter A Song, Album, or Artist" onChange={this.handleTermChange} value={this.state.term} />
+        {this.state.term && <button className="SearchClear" onClick={this.clearSearch}>X</button>}
+        </div>
         <button className="SearchButton" onClick={this.search}>SEARCH</button>
       </div>
     )
-  }
+    } else {
+      return (
+        <div className="SearchBar">
+        <button className="SearchButton" onClick={this.search}>Connect to Spotify</button>
+      </div>
+      )
+    }
+  };
+    
 }

@@ -64,14 +64,25 @@ export default class App extends React.Component {
   }
 
   search(term){
+    //set search tearm to session Storage
+    sessionStorage.setItem("searchTerm", term);
+
     //console.log(term);
     Spotify.search(term).then(searchResults => {
       this.setState({ searchResults: searchResults })
     })
   }
 
+  
+
   render() {
+
+    if (sessionStorage.getItem("searchTerm")) {
+      // Restore the contents of the text field
+      console.log("the search term is " + sessionStorage.getItem("searchTerm"));
+    }
     
+
 
     return (
       <div>

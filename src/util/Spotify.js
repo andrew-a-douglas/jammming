@@ -5,6 +5,9 @@ let accessToken;
 const Spotify = {
 
     getAccessToken(){
+        //Set a session value to say we've authenticated
+        sessionStorage.setItem("spotifyAuth", "true");
+
         if(accessToken){
             return accessToken;
         }

@@ -38,3 +38,22 @@
   .SearchButton:hover {
     background-color: rgba(108, 65, 233, .7);
   }
+
+  .SearchClear {
+    cursor: pointer;
+    width: 1rem;
+    padding: .3rem 0;
+    margin: .3rem;
+    border-radius: 54px;
+    background-color: #010c3f;
+    text-align: center;
+    font-size: .5rem;
+    transition: background-color .25s;
+    border: 0px;
+    color: #fff;
+    font-weight: 500;
+  }
+  
+  .SearchClear:hover {
+    background-color: rgba(108, 65, 233, .7);
+  }
