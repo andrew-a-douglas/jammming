@@ -55,7 +55,7 @@ export default class SearchBar extends Component {
     } else {
       return (
         <div className="SearchBar">
-        <img src='https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-icon-marilyn-scott-0.png' />
+        <img alt='spotify-logo' src='https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-icon-marilyn-scott-0.png' />
         <button className="SearchButton" onClick={this.search}>Connect to Spotify</button>
       </div>
       )
