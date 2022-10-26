@@ -7,7 +7,7 @@ export default class SearchBar extends Component {
   constructor(props){
     let initState = '';
     if(sessionStorage.getItem("searchTerm")){
-      console.log('this worked ' + sessionStorage.getItem("searchTerm") );
+      //console.log('this worked ' + sessionStorage.getItem("searchTerm") );
       initState = sessionStorage.getItem("searchTerm");
     }
 
@@ -31,7 +31,7 @@ export default class SearchBar extends Component {
     sessionStorage.removeItem("searchTerm");
 
     this.setState({term: ''}, function () {
-      console.log('there is nothing here right? ' + this.state.term);
+      //console.log('there is nothing here right? ' + this.state.term);
     });
 
   }

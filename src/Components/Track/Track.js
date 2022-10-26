@@ -28,14 +28,20 @@ export default class Track extends Component {
   }
 
   render() {
-  return (
-      <div className="Track">
-      <div className="Track-information">
-        <h3>{this.props.track.name}</h3>
-        <p>{this.props.track.artist} | {this.props.track.album}</p>
+    //don't render the track item (of search-type) if it's already in the playlist. 
+    if(this.props.type === 'search' && this.props.inList(this.props.track.id)) {
+      return;
+    }
+
+    return (
+        <div className="Track">
+        <div className="Track-information">
+          <h3>{this.props.track.name}</h3>
+          <p>{this.props.track.artist} | {this.props.track.album}</p>
+        </div>
+        {this.renderAction()}
       </div>
-      {this.renderAction()}
-    </div>
-  )
+    )
+
   }
 }

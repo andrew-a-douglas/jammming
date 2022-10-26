@@ -23,6 +23,7 @@ export default class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.isInList = this.isInList.bind(this);
 
   }
 
@@ -63,13 +64,25 @@ export default class App extends React.Component {
     })
   }
 
+  isInList(id){
+    let newArr = this.state.playlistTracks.map(x => x.id)
+    //console.log('isInList Ran.', id, newArr)
+    if (newArr.includes(id)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   search(term){
     //set search tearm to session Storage
     sessionStorage.setItem("searchTerm", term);
 
     //console.log(term);
     Spotify.search(term).then(searchResults => {
-      this.setState({ searchResults: searchResults })
+      
+        this.setState({ searchResults: searchResults });
+        
     })
   }
 
@@ -79,7 +92,8 @@ export default class App extends React.Component {
 
     if (sessionStorage.getItem("searchTerm")) {
       // Restore the contents of the text field
-      console.log("the search term is " + sessionStorage.getItem("searchTerm"));
+      //console.log("the search term is " + sessionStorage.getItem("searchTerm"));
+      //can't remember what this was for!! maybe just testing...
     }
     
 
@@ -90,7 +104,7 @@ export default class App extends React.Component {
       <div className="App">
         <SearchBar onSearch={this.search} />
         <div className="App-playlist">
-          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
+          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} inList={this.isInList} />
           <Playlist playlistName={this.state.playlistname} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />
         </div>
       </div>
