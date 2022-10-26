@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './SearchBar.css';
+import logo from './spotify-logo.png';
 
 
 export default class SearchBar extends Component {
@@ -55,7 +56,7 @@ export default class SearchBar extends Component {
     } else {
       return (
         <div className="SearchBar">
-        <img alt='spotify-logo' src='https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-icon-marilyn-scott-0.png' />
+        <img alt='spotify-logo' src={logo} onClick={this.search} width='150px'/>
         <button className="SearchButton" onClick={this.search}>Connect to Spotify</button>
       </div>
       )
