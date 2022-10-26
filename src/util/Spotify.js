@@ -1,6 +1,6 @@
 const clientId = 'b8127b61a96a4787aaf6f3d8bfc56ab8';
-//const redirectUri = 'http://localhost:3000/';
-const redirectUri = 'https://jammming-andrewdouglas.netlify.app/';
+const redirectUri = 'http://localhost:3000/';
+//const redirectUri = 'https://jammming-andrewdouglas.netlify.app/';
 let accessToken;
 
 const Spotify = {
@@ -16,7 +16,7 @@ const Spotify = {
         // check for access token match
         const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
         const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
-        console.log('grabs: ' + accessTokenMatch, expiresInMatch);
+        //console.log('grabs: ' + accessTokenMatch, expiresInMatch);
 
         if (accessTokenMatch && expiresInMatch) {
             accessToken = accessTokenMatch[1];
@@ -24,7 +24,7 @@ const Spotify = {
             //Clear the parameters from the URL, so the app doesn’t try grabbing the access token after it has expired
             window.setTimeout(() => accessToken = '', expiresIn * 1000);
             window.history.pushState('Access Token', null, '/');
-            console.log(accessToken);
+            //console.log(accessToken);
             return accessToken;
         } else {
             const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`
@@ -40,17 +40,23 @@ const Spotify = {
             }
         }).then(response => {
             return response.json();
+            
         }).then(jsonResponse => {
             if(!jsonResponse.tracks){
                 return [];
             }
-            return jsonResponse.tracks.items.map(track => ({
+            const returnPackage = jsonResponse.tracks.items.map(track => ({
                 id: track.id,
                 name: track.name,
                 artist: track.artists[0].name,
                 album: track.album.name,
-                uri: track.uri
+                uri: track.uri,
+                preview: track.preview_url
             }));
+
+            console.log(returnPackage);
+
+            return returnPackage;
         });
     },
 
