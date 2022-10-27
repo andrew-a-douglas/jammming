@@ -14,6 +14,8 @@ export default class App extends React.Component {
         searchResults: [],
         playlistName: 'placeHolder',
         playlistTracks: [],
+        play: false,
+        audio: new Audio('')
 
     }
 
@@ -24,7 +26,35 @@ export default class App extends React.Component {
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
     this.isInList = this.isInList.bind(this);
+    this.togglePlay = this.togglePlay.bind(this);
 
+  }
+
+  componentDidMount() {
+    this.state.audio.addEventListener('ended', () => this.setState({ play: false }));
+  }
+  
+  componentWillUnmount() {
+    this.state.audio.removeEventListener('ended', () => this.setState({ play: false }));  
+  }
+
+  togglePlay(trackUrl){
+
+    if (this.state.play){
+
+        this.state.audio.pause();
+        this.setState({ play: !this.state.play });
+        return;
+      
+    } 
+
+    this.setState({ audio: new Audio(trackUrl)}, 
+      () => {
+        this.setState({ play: !this.state.play }, () => {
+          this.state.audio.play();
+        });
+
+      })
   }
 
   addTrack(track){
@@ -104,8 +134,8 @@ export default class App extends React.Component {
       <div className="App">
         <SearchBar onSearch={this.search} />
         <div className="App-playlist">
-          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} inList={this.isInList} />
-          <Playlist playlistName={this.state.playlistname} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />
+          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} inList={this.isInList} playButton={this.togglePlay} playPause={this.state.play} />
+          <Playlist playlistName={this.state.playlistname} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} playButton={this.togglePlay} playPause={this.state.play} />
         </div>
       </div>
       

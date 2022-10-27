@@ -7,17 +7,17 @@ export default class Track extends Component {
     super(props);
 
     this.state = {
-      play: false,
-      audio: new Audio(this.props.track.preview)
+      playOrPause: 'Sample'
     }
 
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
   }
 
 
-  componentDidMount() {
+  /* componentDidMount() {
     this.state.audio.addEventListener('ended', () => this.setState({ play: false }));
   }
   
@@ -29,7 +29,7 @@ export default class Track extends Component {
     this.setState({ play: !this.state.play }, () => {
       this.state.play ? this.state.audio.play() : this.state.audio.pause();
     });
-  }
+  }*/
   
   renderAction () {
     if (this.props.isRemoval){
@@ -47,6 +47,11 @@ export default class Track extends Component {
     this.props.onRemove(this.props.track);
   }
 
+  handleClick(){
+    this.props.playButton(this.props.track.preview);
+    //this.props.playButton(this.props.track.preview);
+  }
+
   render() {
     //don't render the track item (of search-type) if it's already in the playlist. 
     if(this.props.type === 'search' && this.props.inList(this.props.track.id)) {
@@ -58,7 +63,7 @@ export default class Track extends Component {
         <div className="Track-information">
           <div className="Track-toprow">
             <h3>{this.props.track.name}</h3>
-            <button className="Track-preview" onClick={this.togglePlay}>{this.state.play ? 'Pause' : 'Sample'}</button>
+            <button className="Track-preview" onClick={this.handleClick}>{this.props.playPause ? '||' : 'Sample'}</button>
           </div>
           <p>{this.props.track.artist} | {this.props.track.album}</p>
         </div>
