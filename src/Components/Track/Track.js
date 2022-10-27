@@ -7,7 +7,8 @@ export default class Track extends Component {
     super(props);
 
     this.state = {
-      playOrPause: 'Sample'
+      playOrPause: 'Sample',
+      lastTrack: ''
     }
 
     this.addTrack = this.addTrack.bind(this);
@@ -15,21 +16,6 @@ export default class Track extends Component {
     this.handleClick = this.handleClick.bind(this);
 
   }
-
-
-  /* componentDidMount() {
-    this.state.audio.addEventListener('ended', () => this.setState({ play: false }));
-  }
-  
-  componentWillUnmount() {
-    this.state.audio.removeEventListener('ended', () => this.setState({ play: false }));  
-  }
-
-  togglePlay = () => {
-    this.setState({ play: !this.state.play }, () => {
-      this.state.play ? this.state.audio.play() : this.state.audio.pause();
-    });
-  }*/
   
   renderAction () {
     if (this.props.isRemoval){
@@ -48,8 +34,8 @@ export default class Track extends Component {
   }
 
   handleClick(){
-    this.props.playButton(this.props.track.preview);
-    //this.props.playButton(this.props.track.preview);
+      this.props.playButton(this.props.track.preview);
+    //this.props.playButton(this.props.track.preview);  
   }
 
   render() {
@@ -63,10 +49,11 @@ export default class Track extends Component {
         <div className="Track-information">
           <div className="Track-toprow">
             <h3>{this.props.track.name}</h3>
-            <button className="Track-preview" onClick={this.handleClick}>{this.props.playPause ? '||' : 'Sample'}</button>
+            
           </div>
           <p>{this.props.track.artist} | {this.props.track.album}</p>
         </div>
+        <button className="Track-preview" onClick={this.handleClick}>{this.props.playPause ? 'Stop' : 'Sample'}</button>
         {this.renderAction()}
       </div>
     )

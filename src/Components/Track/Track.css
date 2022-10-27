@@ -25,6 +25,7 @@
     border: 0px;
     background-color: rgba(0, 0, 0, 0);
     color: #fff;
+    min-width: 35px;
   }
   
   .Track-preview:hover {

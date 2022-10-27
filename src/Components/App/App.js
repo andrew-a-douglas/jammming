@@ -15,7 +15,7 @@ export default class App extends React.Component {
         playlistName: 'placeHolder',
         playlistTracks: [],
         play: false,
-        audio: new Audio('')
+        audio: new Audio('')   
 
     }
 

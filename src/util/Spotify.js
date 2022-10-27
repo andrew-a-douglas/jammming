@@ -54,7 +54,7 @@ const Spotify = {
                 preview: track.preview_url
             }));
 
-            console.log(returnPackage);
+            //console.log(returnPackage);
 
             return returnPackage;
         });
